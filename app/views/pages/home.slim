@@ -1,6 +1,22 @@
-#container
-  #img_bg
+#stripes_bg
+#img_bg
+  =image_tag "bg_image2.jpg"
 
-  #item_description.opaque
-    #left_container
-      h2#app_name Wingman
+#home_container
+  #left_container.row.shadow
+    #app_name 
+      h2 Wingman  
+  #right_container.row
+    
+    = form_tag 'root', id: 'form', method: :post do
+      = hidden_field_tag '_method,', :put 
+      .row.form_attributes
+        = text_field_tag :name, nil, placeholder: "Location"
+      .row.form_attributes
+        = text_field_tag :start_date, nil, placeholder: "Start Date"
+        .form_attributes
+          = text_field_tag :end_date, nil, placeholder: "End Date"
+      .row.form_attributes
+        = text_field_tag :interest, nil, placeholder: "Your Interest"
+      .row.submitForm.form_attributes
+        = submit_tag "Submit", :class=>"btn btn-primary"
