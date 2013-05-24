@@ -11,12 +11,12 @@
     = form_tag '/search',:remote => true, id: 'form', method: :post do
       = hidden_field_tag '_method,', :put 
       .row.form_attributes
-        = text_field_tag :name, nil, placeholder: "Location"
+        = text_field_tag :location, nil, placeholder: "San Francisco, CA"
       .row.form_attributes
-        = text_field_tag :start_date, nil, placeholder: "Start Date"
+        = text_field_tag :start_date, nil, placeholder: "Start Date: 05/27/2013"
         .form_attributes
-          = text_field_tag :end_date, nil, placeholder: "End Date"
+          = text_field_tag :end_date, nil, placeholder: "End Date: 05/29/2013"
       .row.form_attributes
-        = text_field_tag :interest, nil, placeholder: "Your Interest"
+        = text_field_tag :interests, nil, placeholder: "Interests: music, social"
       .row.submitForm.form_attributes
         = submit_tag "Submit", :class=>"btn btn-primary"
