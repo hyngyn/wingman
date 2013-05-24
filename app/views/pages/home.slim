@@ -8,7 +8,7 @@
       h2 Wingman  
   #right_container.row
     
-    = form_tag 'root', id: 'form', method: :post do
+    = form_tag '/search',:remote => true, id: 'form', method: :post do
       = hidden_field_tag '_method,', :put 
       .row.form_attributes
         = text_field_tag :name, nil, placeholder: "Location"

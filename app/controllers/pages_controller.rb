@@ -4,4 +4,7 @@ class PagesController < ApplicationController
 
   end
   
+  def search
+    render nothing: true
+  end
 end
