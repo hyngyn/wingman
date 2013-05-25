@@ -13,8 +13,8 @@ class PagesController < ApplicationController
     city, region = get_city_region_from_input(location)
     interests = interests_list.split(',').join('%20OR%20').gsub(' ', '')
     eventbrite_date_range = generate_date_string(start_date, end_date)
-    response = eventbrite_api_search(interests, city, region, eventbrite_date_range)
-
+    response = eventbrite_api_search(interests, city, region, eventbrite_date_range) rescue nil
+    parsed_response = response.first
     puts response
     render nothing: true
   end

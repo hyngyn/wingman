@@ -5,8 +5,11 @@
 #home_container
   #left_container.row.shadow
     #app_name 
-      h2 Wingman  
+      h2 Wingman
   #right_container.row
+    #value_prop
+      p Find date ideas based on the things you enjoy.
+        
     
     = form_tag '/search',:remote => true, id: 'form', method: :post do
       = hidden_field_tag '_method,', :put 
@@ -19,4 +22,4 @@
       .row.form_attributes
         = text_field_tag :interests, nil, placeholder: "Interests: music, social"
       .row.submitForm.form_attributes
-        = submit_tag "Submit", :class=>"btn btn-primary"
+        = submit_tag "Search", :class=>"btn btn-primary"
