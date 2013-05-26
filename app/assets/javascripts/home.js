@@ -23,4 +23,7 @@ $(function() {
   $(".btn-primary").on("click", function(){
     $('.no_results').addClass("hidden");
   });
+
+  $("#start_date").datepicker();
+  $("#end_date").datepicker();
 });

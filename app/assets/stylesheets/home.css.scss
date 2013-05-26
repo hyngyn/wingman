@@ -46,8 +46,9 @@ input{ width: 83%;}
   p{text-align: center;margin-top: 10px;}
 }
 .shadow { -moz-box-shadow: 0 0 20px gray; -webkit-box-shadow: 0 0 20px gray; box-shadow: 6px 0px 10px -4px gray, -6px 0px 10px -4px gray; }
-.form_attributes { margin-top: 20px;}
-.submitForm{float: right; margin-right: 50px;}
+.form_attributes { margin-top: 20px; width: 350px;}
+select { width:300px; }
+.submitForm{float: right; margin-right:70px; margin-top: 20px;}
 
 #modifier_container{float: left; clear:left; width:400px; margin-left: 45px;}
 

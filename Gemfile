@@ -12,7 +12,7 @@ end
 gem 'weather-underground'
 gem 'slim'
 gem 'eventbrite-client'
-
+gem 'jquery_datepicker'
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
