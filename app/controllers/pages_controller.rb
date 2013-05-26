@@ -44,6 +44,7 @@ class PagesController < ApplicationController
         url = event["url"]
         event_name = event["title"].downcase.titleize
         address = event["venue"]["address"].to_s + ", " + event["venue"]["city"] + ", " + event["venue"]["country"]
+        address.sub!(", ", "") if address[0,2] == ", "
         
         event_hash = { logo_url: logo_url,
                        url: url,
