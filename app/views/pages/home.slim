@@ -14,7 +14,7 @@
     #modifier_container
       = form_tag '/search',:remote => true, id: 'form', method: :post do
         .row.form_attributes
-          = text_field_tag :location, nil, placeholder: "San Francisco, CA"
+          = select_tag(:location, options_for_select(PagesController::CITIES))
         .row.form_attributes
           = text_field_tag :start_date, nil, placeholder: "Start Date: 05/27/2013"
           .form_attributes

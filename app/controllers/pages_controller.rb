@@ -1,6 +1,8 @@
 class PagesController < ApplicationController
   MAX_EVENTS_COUNT = 5
-  
+  CITIES = [["Atlanta, GA", "Atlanta, GA"], ["Dallas, TX", "Dallas, TX"], ["Washington, DC","Washington, DC"], ["Seattle, WA","Seattle, WA"], ["San Jose, CA","San Jose, CA"], ["San Francisco, CA","San Francisco, CA"],
+            ["Philadelphia, PA", "Philadelphia, PA"], ["New York, NY","New York, NY"], ["Miami, FL","Miami, FL"], ["Los Angeles, CA","Los Angeles, CA"], ["Houston, TX", "Houston, TX"], ["Denver, CO","Denver, CO"],
+            ["Chicago, IL","Chicago, IL"], ["Boston, MA","Boston, MA"], ["Austin, TX","Austin, TX"], ["Phoenix, AZ","Phoenix, AZ"]]
   def home
 
   end

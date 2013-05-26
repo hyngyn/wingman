@@ -8,6 +8,6 @@
       .event_name 
         p #{truncate(event[:event_name], length:40)}
       .event_address
-        p #{event[:address]}
+        p #{truncate(event[:address], length:52)}
 
 = link_to "New Search", root_path, id: "new_search"

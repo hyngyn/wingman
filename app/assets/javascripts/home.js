@@ -8,7 +8,19 @@ $(function() {
     $('.no_results').removeClass("hidden");
   });
 
+  $("form").on("ajax:before", function(xhr, data, status) {
+    $(".btn-primary").attr("disabled", true);
+  });
+
+  $("form").on("ajax:complete", function(xhr, data, status) {
+    $(".btn-primary").attr("disabled", false);
+  });
+
   $("#new_search").on("click", function(){
+    $('.no_results').addClass("hidden");
+  });
+
+  $(".btn-primary").on("click", function(){
     $('.no_results').addClass("hidden");
   });
 });
