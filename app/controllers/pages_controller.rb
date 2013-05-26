@@ -4,7 +4,8 @@ class PagesController < ApplicationController
             ["Dallas, TX", "Dallas, TX"], ["Denver, CO","Denver, CO"], ["Houston, TX", "Houston, TX"], ["Los Angeles, CA","Los Angeles, CA"],
             ["Miami, FL","Miami, FL"], ["New York, NY","New York, NY"], ["Philadelphia, PA", "Philadelphia, PA"], ["Phoenix, AZ","Phoenix, AZ"],
             ["San Jose, CA","San Jose, CA"], ["Seattle, WA","Seattle, WA"], ["Washington, DC","Washington, DC"]]
-  
+  EVENTBRITE_CATEGORIES = "entertainment, fundraisers, others, performances, social, sports, travel, fairs, food, music, recreation"
+
   def home
 
   end
@@ -71,7 +72,8 @@ class PagesController < ApplicationController
                                           city: city,
                                           region: region,
                                           date: date_range,
-                                          max: MAX_EVENTS_COUNT })
+                                          max: MAX_EVENTS_COUNT,
+                                          category: EVENTBRITE_CATEGORIES })
     end
 
     #generate date string for eventbrite api call
