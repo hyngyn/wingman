@@ -4,10 +4,12 @@ class PagesController < ApplicationController
             ["Dallas, TX", "Dallas, TX"], ["Denver, CO","Denver, CO"], ["Houston, TX", "Houston, TX"], ["Los Angeles, CA","Los Angeles, CA"],
             ["Miami, FL","Miami, FL"], ["New York, NY","New York, NY"], ["Philadelphia, PA", "Philadelphia, PA"], ["Phoenix, AZ","Phoenix, AZ"],
             ["San Jose, CA","San Jose, CA"], ["Seattle, WA","Seattle, WA"], ["Washington, DC","Washington, DC"]]
+  
   def home
 
   end
   
+  #search driver
   def search
     location = params[:location].to_s
     interests_list = params[:interests].to_s
@@ -30,6 +32,7 @@ class PagesController < ApplicationController
 
   private
 
+    #strip full events hash to relevant info to display in view
     def strip_event_results(events)
       stripped_events = []
       events.each do |e|
@@ -50,6 +53,7 @@ class PagesController < ApplicationController
       stripped_events
     end
 
+    #split location string and return city, region
     def get_city_region_from_input(location)
       city_region = location.split(',')
       city = city_region.first.strip.titleize rescue ""
@@ -57,6 +61,7 @@ class PagesController < ApplicationController
       return city, region
     end
 
+    #eventbrite api call
     def eventbrite_api_search(interests, city, region, date_range)
       eb_auth_tokens = { app_key: 'HKZFAX6AT4QX2JVNN7',
                          user_key: '134983204943172706728' }
@@ -69,6 +74,7 @@ class PagesController < ApplicationController
                                           max: MAX_EVENTS_COUNT })
     end
 
+    #generate date string for eventbrite api call
     def generate_date_string(start_date, end_date)
       # [mm,dd,yyyy]
       start_array = start_date.scan(/[0-9]+/)

@@ -8,5 +8,6 @@ Wingman[http://wing.herokuapp.com] is an event search that utilizes the EventBri
   * Write tests.
   * Hook up weather API to remove bad weather days.
   * Responsive design and various styling fixes.
+  * Refactor and move api logic to module.
 
 The application can be currently found at http://wing.herokuapp.com.
