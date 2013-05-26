@@ -1,8 +1,9 @@
 class PagesController < ApplicationController
   MAX_EVENTS_COUNT = 5
-  CITIES = [["San Francisco, CA","San Francisco, CA"], ["Atlanta, GA", "Atlanta, GA"], ["Dallas, TX", "Dallas, TX"], ["Washington, DC","Washington, DC"], ["Seattle, WA","Seattle, WA"], ["San Jose, CA","San Jose, CA"],
-            ["Philadelphia, PA", "Philadelphia, PA"], ["New York, NY","New York, NY"], ["Miami, FL","Miami, FL"], ["Los Angeles, CA","Los Angeles, CA"], ["Houston, TX", "Houston, TX"], ["Denver, CO","Denver, CO"],
-            ["Chicago, IL","Chicago, IL"], ["Boston, MA","Boston, MA"], ["Austin, TX","Austin, TX"], ["Phoenix, AZ","Phoenix, AZ"]]
+  CITIES = [["San Francisco, CA","San Francisco, CA"], ["Atlanta, GA", "Atlanta, GA"], ["Austin, TX","Austin, TX"], ["Boston, MA","Boston, MA"], ["Chicago, IL","Chicago, IL"],
+            ["Dallas, TX", "Dallas, TX"], ["Denver, CO","Denver, CO"], ["Houston, TX", "Houston, TX"], ["Los Angeles, CA","Los Angeles, CA"],
+            ["Miami, FL","Miami, FL"], ["New York, NY","New York, NY"], ["Philadelphia, PA", "Philadelphia, PA"], ["Phoenix, AZ","Phoenix, AZ"],
+            ["San Jose, CA","San Jose, CA"], ["Seattle, WA","Seattle, WA"], ["Washington, DC","Washington, DC"]]
   def home
 
   end
