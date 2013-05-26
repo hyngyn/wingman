@@ -4,6 +4,7 @@ class PagesController < ApplicationController
             ["Dallas, TX", "Dallas, TX"], ["Denver, CO","Denver, CO"], ["Houston, TX", "Houston, TX"], ["Los Angeles, CA","Los Angeles, CA"],
             ["Miami, FL","Miami, FL"], ["New York, NY","New York, NY"], ["Philadelphia, PA", "Philadelphia, PA"], ["Phoenix, AZ","Phoenix, AZ"],
             ["San Jose, CA","San Jose, CA"], ["Seattle, WA","Seattle, WA"], ["Washington, DC","Washington, DC"]]
+  BAD_WEATHER = ["chancerain", "rain"]
   def home
 
   end
@@ -16,9 +17,13 @@ class PagesController < ApplicationController
 
     city, region = get_city_region_from_input(location)
     interests = interests_list.split(',').join('%20OR%20').gsub(' ', '')
-    eventbrite_date_range = generate_date_string(start_date, end_date)
+   
+    eventbrite_date_array = generate_date_array(start_date, end_date)
+    forecast_days = get_weather(city, region)
 
-    results = eventbrite_api_search(interests, city, region, eventbrite_date_range) rescue nil
+    filtered_date = filter_bad_weather(forecast_days, eventbrite_date_array)
+
+    results = eventbrite_api_search(interests, city, region, eventbrite_date_array) rescue nil
     return render :json => {}, :status => 500 if results.blank?
     summary = results.first.last.shift
     events = results.first.last
@@ -29,6 +34,25 @@ class PagesController < ApplicationController
   end
 
   private
+
+    def filter_bad_weather(forecast_days, eventbrite_date_array)
+      eventbrite_date_array.reject!{|day| BAD_WEATHER.include?(forecast_days[day]) }
+    end
+
+    def get_weather(city, region)
+      w_api = Wunderground.new("2064437974116822")
+      forecast = w_api.forecast10day_for(region,city.gsub(" ","%20"))["forecast"]["txt_forecast"]["forecastday"]
+      forecast_days =  {}
+
+      forecast.each_with_index do |item,index| 
+        if index % 2 == 0 
+          day = (Time.now + (index/2).days).strftime("%Y/%m/%d").to_s
+ 
+          forecast_days[day] = item["icon"]
+        end
+      end
+      forecast_days
+    end
 
     def strip_event_results(events)
       stripped_events = []
@@ -45,6 +69,7 @@ class PagesController < ApplicationController
                        url: url,
                        event_name: event_name,
                        address: address }
+
         stripped_events << event_hash
       end
       stripped_events
@@ -57,31 +82,47 @@ class PagesController < ApplicationController
       return city, region
     end
 
-    def eventbrite_api_search(interests, city, region, date_range)
+    def eventbrite_api_search(interests, city, region, date_array)
       eb_auth_tokens = { app_key: 'HKZFAX6AT4QX2JVNN7',
                          user_key: '134983204943172706728' }
 
       eb_client = EventbriteClient.new(eb_auth_tokens)
-      response = eb_client.event_search({ keywords: interests,
-                                          city: city,
-                                          region: region,
-                                          date: date_range,
-                                          max: MAX_EVENTS_COUNT })
+
+      response_array = []
+      date_array.each do |date|
+        date_parts = date.scan(/[0-9]+/)
+        ruby_date = Date.strptime("{ #{date_parts[0]}, #{date_parts[1]}, #{date_parts[2]} }", "{ %Y, %m, %d }")
+
+        next_day = (ruby_date + 1.days).strftime("%Y/%m/%d").to_s
+
+        date_range =generate_date_string(date, next_day)
+        response = eb_client.event_search({ keywords: interests,
+                                            city: city,
+                                            region: region,
+                                            date: date_range })
+        response_array << response
+      end
+      response_array
     end
 
     def generate_date_string(start_date, end_date)
-      # [mm,dd,yyyy]
       start_array = start_date.scan(/[0-9]+/)
       end_array = end_date.scan(/[0-9]+/)
-
-      # [yyyy,dd,mm]
-      start_array.reverse!
-      end_array.reverse!
-
-      # [yyyy,mm,dd]
-      start_array[1], start_array[2] = start_array[2], start_array[1]
-      end_array[1], end_array[2] = end_array[2], end_array[1]
-
       eventbrite_date =  start_array.join('-') + " " + end_array.join('-')
+    end
+
+    def generate_date_array(start_date, end_date)
+      start_array = start_date.scan(/[0-9]+/)
+      end_array = end_date.scan(/[0-9]+/)
+      ruby_start_date = Date.strptime("{ #{start_array[2]}, #{start_array[0]}, #{start_array[1]} }", "{ %Y, %m, %d }")
+      ruby_end_date =Date.strptime("{ #{end_array[2]}, #{end_array[0]}, #{end_array[1]} }", "{ %Y, %m, %d }")
+      num_of_days = (ruby_end_date-ruby_start_date).to_i + 1
+      date_array=[]
+      index = 0
+      num_of_days.times do
+        date_array << (ruby_start_date + index.days).strftime("%Y/%m/%d").to_s
+        index += 1
+      end
+      date_array
     end
 end
