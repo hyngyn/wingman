@@ -42,6 +42,9 @@ input{ width: 83%;}
 
 .hidden{ display: none; }
 
+.no_results{float: left; clear: left; background: #f77979; width: 378px; margin-left: 45px;
+  p{text-align: center;margin-top: 10px;}
+}
 .shadow { -moz-box-shadow: 0 0 20px gray; -webkit-box-shadow: 0 0 20px gray; box-shadow: 6px 0px 10px -4px gray, -6px 0px 10px -4px gray; }
 .form_attributes { margin-top: 20px;}
 .submitForm{float: right; margin-right: 50px;}
@@ -60,7 +63,7 @@ input{ width: 83%;}
     #value_prop{ float:left; margin-top:28px; margin-left: 25px;
       p{font-family: 'Helvetica'; font-size: 18px;  margin-left: 20px; margin-top: 18px; }
     }
-    #form{ width: 350px; margin-left: 45px; margin-top: 18px;
+    #form{ width: 350px; margin-left: 45px; margin-top: 12px;
       float: left; clear: left;
     }
   }

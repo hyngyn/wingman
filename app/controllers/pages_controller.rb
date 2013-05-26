@@ -16,12 +16,12 @@ class PagesController < ApplicationController
     eventbrite_date_range = generate_date_string(start_date, end_date)
 
     results = eventbrite_api_search(interests, city, region, eventbrite_date_range) rescue nil
-    return render json: {fail: true}.to_json if results.nil?
+    return render :json => {}, :status => 500 if results.blank?
     summary = results.first.last.shift
     events = results.first.last
-
-    @stripped_events = strip_event_results(events)
-
+ 
+    @stripped_events = strip_event_results(events) rescue {}
+    
     render partial: "search_results", :content_type => 'text/html'
   end
 
@@ -49,7 +49,9 @@ class PagesController < ApplicationController
 
     def get_city_region_from_input(location)
       city_region = location.split(',')
-      return city_region.first.strip.titleize, city_region.last.strip.upcase
+      city = city_region.first.strip.titleize rescue ""
+      region = city_region.last.strip.upcase rescue ""
+      return city, region
     end
 
     def eventbrite_api_search(interests, city, region, date_range)
