@@ -9,17 +9,15 @@
   #right_container.row
     #value_prop
       p Find date ideas based on the things you enjoy.
-        
-    
-    = form_tag '/search',:remote => true, id: 'form', method: :post do
-      = hidden_field_tag '_method,', :put 
-      .row.form_attributes
-        = text_field_tag :location, nil, placeholder: "San Francisco, CA"
-      .row.form_attributes
-        = text_field_tag :start_date, nil, placeholder: "Start Date: 05/27/2013"
-        .form_attributes
-          = text_field_tag :end_date, nil, placeholder: "End Date: 05/29/2013"
-      .row.form_attributes
-        = text_field_tag :interests, nil, placeholder: "Interests: music, social"
-      .row.submitForm.form_attributes
-        = submit_tag "Search", :class=>"btn btn-primary"
+    #modifier_container
+      = form_tag '/search',:remote => true, id: 'form', method: :post do
+        .row.form_attributes
+          = text_field_tag :location, nil, placeholder: "San Francisco, CA"
+        .row.form_attributes
+          = text_field_tag :start_date, nil, placeholder: "Start Date: 05/27/2013"
+          .form_attributes
+            = text_field_tag :end_date, nil, placeholder: "End Date: 05/29/2013"
+        .row.form_attributes
+          = text_field_tag :interests, nil, placeholder: "Interests: music, social"
+        .row.submitForm.form_attributes
+          = submit_tag "Search", :class=>"btn btn-primary"

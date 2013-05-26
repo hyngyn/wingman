@@ -1,5 +1,6 @@
 class PagesController < ApplicationController
-
+  MAX_EVENTS_COUNT = 5
+  
   def home
 
   end
@@ -15,18 +16,40 @@ class PagesController < ApplicationController
     eventbrite_date_range = generate_date_string(start_date, end_date)
 
     results = eventbrite_api_search(interests, city, region, eventbrite_date_range) rescue nil
-    
+    return render json: {fail: true}.to_json if results.nil?
     summary = results.first.last.shift
     events = results.first.last
 
-    render nothing: true
+    @stripped_events = strip_event_results(events)
+
+    render partial: "search_results", :content_type => 'text/html'
   end
 
   private
 
+    def strip_event_results(events)
+      stripped_events = []
+      events.each do |e|
+        event_hash =  {}
+        event = e["event"]
+
+        logo_url = event["logo"]
+        url = event["url"]
+        event_name = event["title"].downcase.titleize
+        address = event["venue"]["address"].to_s + ", " + event["venue"]["city"] + ", " + event["venue"]["country"]
+        
+        event_hash = { logo_url: logo_url,
+                       url: url,
+                       event_name: event_name,
+                       address: address }
+        stripped_events << event_hash
+      end
+      stripped_events
+    end
+
     def get_city_region_from_input(location)
       city_region = location.split(',')
-      return city_region.first.strip, city_region.last.strip
+      return city_region.first.strip.titleize, city_region.last.strip.upcase
     end
 
     def eventbrite_api_search(interests, city, region, date_range)
@@ -37,7 +60,8 @@ class PagesController < ApplicationController
       response = eb_client.event_search({ keywords: interests,
                                           city: city,
                                           region: region,
-                                          date: date_range })
+                                          date: date_range,
+                                          max: MAX_EVENTS_COUNT })
     end
 
     def generate_date_string(start_date, end_date)
