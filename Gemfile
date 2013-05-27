@@ -9,7 +9,7 @@ end
 group :development, :test do
   gem 'sqlite3'
 end
-gem 'weather-underground'
+gem 'wunderground'
 gem 'slim'
 gem 'eventbrite-client'
 gem 'jquery_datepicker'
