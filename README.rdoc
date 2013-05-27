@@ -8,10 +8,13 @@ Wingman[http://wing.herokuapp.com] is an event search that utilizes the EventBri
   * Styling issues with background image and various alignment issues.
 
 ==Pipeline
-  * Clean up CSS and javascript.
-  * Write tests.
+  * Clean up CSS and organize javascript.
   * Hook up weather API to remove bad weather days.
   * Responsive design and various styling fixes.
+<<<<<<< HEAD
   * Better default image for events with no images.
+=======
+  * Refactor and move api logic to module with automated testing.
+>>>>>>> 53b2635718d0684b9f35ffdb97977c513eda6cfa
 
 The application can be currently found at http://wing.herokuapp.com.

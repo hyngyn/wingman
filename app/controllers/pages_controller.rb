@@ -4,11 +4,17 @@ class PagesController < ApplicationController
             ["Dallas, TX", "Dallas, TX"], ["Denver, CO","Denver, CO"], ["Houston, TX", "Houston, TX"], ["Los Angeles, CA","Los Angeles, CA"],
             ["Miami, FL","Miami, FL"], ["New York, NY","New York, NY"], ["Philadelphia, PA", "Philadelphia, PA"], ["Phoenix, AZ","Phoenix, AZ"],
             ["San Jose, CA","San Jose, CA"], ["Seattle, WA","Seattle, WA"], ["Washington, DC","Washington, DC"]]
+<<<<<<< HEAD
   BAD_WEATHER = ["chancerain", "rain"]
+=======
+  EVENTBRITE_CATEGORIES = "entertainment, others, performances, social, sports, travel, fairs, food, music, recreation"
+
+>>>>>>> 53b2635718d0684b9f35ffdb97977c513eda6cfa
   def home
 
   end
   
+  #search driver
   def search
     location = params[:location].to_s
     interests_list = params[:interests].to_s
@@ -35,6 +41,7 @@ class PagesController < ApplicationController
 
   private
 
+<<<<<<< HEAD
     def filter_bad_weather(forecast_days, eventbrite_date_array)
       eventbrite_date_array.reject!{|day| BAD_WEATHER.include?(forecast_days[day]) }
     end
@@ -54,6 +61,9 @@ class PagesController < ApplicationController
       forecast_days
     end
 
+=======
+    #strip full events hash to relevant info to display in view
+>>>>>>> 53b2635718d0684b9f35ffdb97977c513eda6cfa
     def strip_event_results(events)
       stripped_events = []
       events.each do |e|
@@ -64,7 +74,8 @@ class PagesController < ApplicationController
         url = event["url"]
         event_name = event["title"].downcase.titleize
         address = event["venue"]["address"].to_s + ", " + event["venue"]["city"] + ", " + event["venue"]["country"]
-        
+        address.sub!(", ", "") if address[0,2] == ", "
+
         event_hash = { logo_url: logo_url,
                        url: url,
                        event_name: event_name,
@@ -75,6 +86,7 @@ class PagesController < ApplicationController
       stripped_events
     end
 
+    #split location string and return city, region
     def get_city_region_from_input(location)
       city_region = location.split(',')
       city = city_region.first.strip.titleize rescue ""
@@ -82,11 +94,17 @@ class PagesController < ApplicationController
       return city, region
     end
 
+<<<<<<< HEAD
     def eventbrite_api_search(interests, city, region, date_array)
+=======
+    #eventbrite api call
+    def eventbrite_api_search(interests, city, region, date_range)
+>>>>>>> 53b2635718d0684b9f35ffdb97977c513eda6cfa
       eb_auth_tokens = { app_key: 'HKZFAX6AT4QX2JVNN7',
                          user_key: '134983204943172706728' }
 
       eb_client = EventbriteClient.new(eb_auth_tokens)
+<<<<<<< HEAD
 
       response_array = []
       date_array.each do |date|
@@ -103,8 +121,17 @@ class PagesController < ApplicationController
         response_array << response
       end
       response_array
+=======
+      response = eb_client.event_search({ keywords: interests,
+                                          city: city,
+                                          region: region,
+                                          date: date_range,
+                                          max: MAX_EVENTS_COUNT,
+                                          category: EVENTBRITE_CATEGORIES })
+>>>>>>> 53b2635718d0684b9f35ffdb97977c513eda6cfa
     end
 
+    #generate date string for eventbrite api call
     def generate_date_string(start_date, end_date)
       start_array = start_date.scan(/[0-9]+/)
       end_array = end_date.scan(/[0-9]+/)
