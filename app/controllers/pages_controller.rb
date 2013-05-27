@@ -33,6 +33,7 @@ class PagesController < ApplicationController
     summary = results.first.last.shift
     events = results.first.last
     @stripped_events = strip_event_results(events, filtered_dates)
+    @stripped_events = @stripped_events.first(5)
 
     return render :json => {}, :status => 500 if @stripped_events.blank?
 
