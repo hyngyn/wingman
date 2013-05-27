@@ -4,12 +4,11 @@ class PagesController < ApplicationController
             ["Dallas, TX", "Dallas, TX"], ["Denver, CO","Denver, CO"], ["Houston, TX", "Houston, TX"], ["Los Angeles, CA","Los Angeles, CA"],
             ["Miami, FL","Miami, FL"], ["New York, NY","New York, NY"], ["Philadelphia, PA", "Philadelphia, PA"], ["Phoenix, AZ","Phoenix, AZ"],
             ["San Jose, CA","San Jose, CA"], ["Seattle, WA","Seattle, WA"], ["Washington, DC","Washington, DC"]]
-<<<<<<< HEAD
+
   BAD_WEATHER = ["chancerain", "rain"]
-=======
+
   EVENTBRITE_CATEGORIES = "entertainment, others, performances, social, sports, travel, fairs, food, music, recreation"
 
->>>>>>> 53b2635718d0684b9f35ffdb97977c513eda6cfa
   def home
 
   end
@@ -27,23 +26,24 @@ class PagesController < ApplicationController
     eventbrite_date_array = generate_date_array(start_date, end_date)
     forecast_days = get_weather(city, region)
 
-    filtered_date = filter_bad_weather(forecast_days, eventbrite_date_array)
+    filtered_dates = filter_bad_weather(forecast_days, eventbrite_date_array)
 
     results = eventbrite_api_search(interests, city, region, eventbrite_date_array) rescue nil
     return render :json => {}, :status => 500 if results.blank?
     summary = results.first.last.shift
     events = results.first.last
- 
-    @stripped_events = strip_event_results(events) rescue {}
-    
+    @stripped_events = strip_event_results(events, filtered_dates)
+
+    return render :json => {}, :status => 500 if @stripped_events.blank?
+
     render partial: "search_results", :content_type => 'text/html'
   end
 
   private
 
-<<<<<<< HEAD
     def filter_bad_weather(forecast_days, eventbrite_date_array)
       eventbrite_date_array.reject!{|day| BAD_WEATHER.include?(forecast_days[day]) }
+      return eventbrite_date_array.blank? ? [] : eventbrite_date_array
     end
 
     def get_weather(city, region)
@@ -61,15 +61,13 @@ class PagesController < ApplicationController
       forecast_days
     end
 
-=======
     #strip full events hash to relevant info to display in view
->>>>>>> 53b2635718d0684b9f35ffdb97977c513eda6cfa
-    def strip_event_results(events)
+    def strip_event_results(events, good_days)
       stripped_events = []
       events.each do |e|
         event_hash =  {}
         event = e["event"]
-
+        event_date = event["start_date"][0..9]
         logo_url = event["logo"]
         url = event["url"]
         event_name = event["title"].downcase.titleize
@@ -79,11 +77,12 @@ class PagesController < ApplicationController
         event_hash = { logo_url: logo_url,
                        url: url,
                        event_name: event_name,
-                       address: address }
+                       address: address,
+                       date: event_date }
 
         stripped_events << event_hash
       end
-      stripped_events
+      stripped_events.reject{|event| good_days.include?(event[:date].to_s)}
     end
 
     #split location string and return city, region
@@ -94,41 +93,21 @@ class PagesController < ApplicationController
       return city, region
     end
 
-<<<<<<< HEAD
-    def eventbrite_api_search(interests, city, region, date_array)
-=======
+
     #eventbrite api call
-    def eventbrite_api_search(interests, city, region, date_range)
->>>>>>> 53b2635718d0684b9f35ffdb97977c513eda6cfa
+    def eventbrite_api_search(interests, city, region, date_array)
       eb_auth_tokens = { app_key: 'HKZFAX6AT4QX2JVNN7',
                          user_key: '134983204943172706728' }
 
       eb_client = EventbriteClient.new(eb_auth_tokens)
-<<<<<<< HEAD
 
-      response_array = []
-      date_array.each do |date|
-        date_parts = date.scan(/[0-9]+/)
-        ruby_date = Date.strptime("{ #{date_parts[0]}, #{date_parts[1]}, #{date_parts[2]} }", "{ %Y, %m, %d }")
-
-        next_day = (ruby_date + 1.days).strftime("%Y/%m/%d").to_s
-
-        date_range =generate_date_string(date, next_day)
-        response = eb_client.event_search({ keywords: interests,
-                                            city: city,
-                                            region: region,
-                                            date: date_range })
-        response_array << response
-      end
-      response_array
-=======
+      date_range =generate_date_string(date_array.first, date_array.last)
       response = eb_client.event_search({ keywords: interests,
                                           city: city,
                                           region: region,
                                           date: date_range,
-                                          max: MAX_EVENTS_COUNT,
+                                          max: 100,
                                           category: EVENTBRITE_CATEGORIES })
->>>>>>> 53b2635718d0684b9f35ffdb97977c513eda6cfa
     end
 
     #generate date string for eventbrite api call
