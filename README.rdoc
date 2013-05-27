@@ -3,10 +3,15 @@
 
 Wingman[http://wing.herokuapp.com] is an event search that utilizes the EventBrite API to fetch from a database of events. 
 
+==Known Issues
+  * User can choose end date that is before start date.
+  * Styling issues with background image and various alignment issues.
+
 ==Pipeline
   * Clean up CSS and organize javascript.
-  * Hook up weather API to remove bad weather days.
   * Responsive design and various styling fixes.
+  * Better default image for events with no images.
   * Refactor and move api logic to module with automated testing.
+
 
 The application can be currently found at http://wing.herokuapp.com.
