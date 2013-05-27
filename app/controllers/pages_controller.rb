@@ -4,7 +4,7 @@ class PagesController < ApplicationController
             ["Dallas, TX", "Dallas, TX"], ["Denver, CO","Denver, CO"], ["Houston, TX", "Houston, TX"], ["Los Angeles, CA","Los Angeles, CA"],
             ["Miami, FL","Miami, FL"], ["New York, NY","New York, NY"], ["Philadelphia, PA", "Philadelphia, PA"], ["Phoenix, AZ","Phoenix, AZ"],
             ["San Jose, CA","San Jose, CA"], ["Seattle, WA","Seattle, WA"], ["Washington, DC","Washington, DC"]]
-  EVENTBRITE_CATEGORIES = "entertainment, fundraisers, others, performances, social, sports, travel, fairs, food, music, recreation"
+  EVENTBRITE_CATEGORIES = "entertainment, others, performances, social, sports, travel, fairs, food, music, recreation"
 
   def home
 
@@ -45,7 +45,7 @@ class PagesController < ApplicationController
         event_name = event["title"].downcase.titleize
         address = event["venue"]["address"].to_s + ", " + event["venue"]["city"] + ", " + event["venue"]["country"]
         address.sub!(", ", "") if address[0,2] == ", "
-        
+
         event_hash = { logo_url: logo_url,
                        url: url,
                        event_name: event_name,
