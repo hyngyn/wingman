@@ -12,7 +12,7 @@
 
   #right_container.row
     #value_prop
-      p Find date ideas based on the things you enjoy.
+      p Find date ideas based on your interests.
     .no_results.hidden
       p There are no events that match your criteria. 
     #modifier_container
@@ -21,8 +21,8 @@
           = select_tag(:location, options_for_select(PagesController::CITIES))
         .row.form_attributes
           = text_field_tag :start_date, nil, placeholder: "Start Date", :id => "start_date"
-          .form_attributes
-            = text_field_tag :end_date, nil, placeholder: "End Date", :id => "end_date"
+        .row.form_attributes
+          = text_field_tag :end_date, nil, placeholder: "End Date", :id => "end_date"
         .row.form_attributes
           = text_field_tag :interests, nil, placeholder: "Interested In: music, beer, social..."
         .row.submitForm
