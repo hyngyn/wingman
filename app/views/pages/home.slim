@@ -6,11 +6,11 @@
  
     #app_name
       h2 Wingman
+    #value_prop
+      p Find date ideas based on your interests.
     .no_results.hidden
       p There are no events that match your criteria. 
     #modifier_container
-      #value_prop
-        p Find date ideas based on your interests.
       = form_tag '/search',:remote => true, id: 'form', method: :post do
         .row.form_attributes
           = select_tag(:location, options_for_select(PagesController::CITIES))
