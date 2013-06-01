@@ -1,13 +1,14 @@
-- @stripped_events.each do |event|
-  .each_event
-    = link_to event[:url], target: "_blank" do
-      -if !event[:logo_url].blank?
-        =image_tag event[:logo_url]
-      -else
-        .empty_img
-      .event_name 
-        p #{truncate(event[:event_name], length:40)}
-      .event_address
-        p #{truncate(event[:address], length:52)}
+#search_results
+  - @stripped_events.each do |event|
+    .each_event
+      = link_to event[:url], target: "_blank" do
+        -if !event[:logo_url].blank?
+          =image_tag event[:logo_url]
+        -else
+          .empty_img
+        .event_name 
+          p #{truncate(event[:event_name], length:40)}
+        .event_address
+          p #{truncate(event[:address], length:52)}
 
-= link_to "New Search", root_path, id: "new_search"
+  = link_to "New Search", root_path, id: "new_search"

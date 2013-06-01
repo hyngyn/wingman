@@ -32,8 +32,8 @@ input{ width: 83%;}
 
 .hidden{ display: none; }
 
-.no_results{float: left; clear: left; background: #f77979; width: 378px; margin-left: 12px;
-  p{text-align: center;margin-top: 10px;}
+.no_results{float: left; clear: left; background: #f77979; width: 100%; margin:8px 0 10px 0px;
+  p{text-align: center; margin-top: 10px; padding: 0px;}
 }
 
 .shadow { -moz-box-shadow: 0 0 20px gray; -webkit-box-shadow: 0 0 20px gray; box-shadow: 6px 0px 10px -4px gray, -6px 0px 10px -4px gray; }
@@ -44,25 +44,18 @@ select { width:300px; }
 
 .submitForm{float: right; margin-right:10px; margin-top: 20px;}
 
-#modifier_container{float: left; clear:left; width:400px; margin-left: 10px;}
-
-#home_container{float: left; clear: left; margin-top: 50px; margin-left: -340px; position: relative; left: 50%; font-family: Helvetica; font-weight: 100; width: 746px; height: 450px; 
+#home_container{float: left; clear: left; margin-top: 50px; margin-left: -250px; position: relative; left: 50%; font-family: Helvetica; font-weight: 100; width: 500px; height: 438px; 
   background: rgba(225, 225, 225, .8); 
-  #left_container{ float: left;background:rgba(233, 199, 74, 0.9); width: 240px; height: 450px;  margin-left: 40px; margin-right: 60px;
-    #app_name { width:100%; margin-top: 20px; float: left;
-      h2{ font-weight: 100; font-size: 35px;  text-align: center; font-family: 'Pacifico'; }
-      #sunny_icon{width: 50px; height: 50px; float: left; margin-left: 100px; margin-top: 27px;}
-      #heart_icon{width: 50px; height: 50px; float: left; margin-left: 100px; margin-top: 20px; opacity: 0.5;}
-      p{float: left; clear: left; font-size: 16px; margin-left: 40px; margin-top: 15px}
+  #app_name{ margin-top: 25px;
+    h2{ font-weight: 100; font-size: 35px;  text-align: center; font-family: 'Pacifico'; }
+  }
+  #modifier_container{
+    #value_prop{ margin-top: 20px; width: 100%; 
+      p{font-family: 'Helvetica';  font-size: 16px; text-align: center; margin-top: 10px; }
     }
   }
-
-  #right_container{ height: 450px; width: 430px; float: left;
-    #value_prop{ float:left; margin-top:28px; margin-left: 38px;
-      p{font-family: 'Helvetica'; font-size: 18px;  margin-top: 18px; }
-    }
-    #form{ width: 350px; margin-left: 0px; margin-top: 12px; float: left; clear: left; }
-  }
+  #form{ width: 350px; margin-left: 64px; margin-top: 12px }
+  
   a{ color: black; text-decoration: none; }
   a:hover{ text-decoration: underline; }
 }
