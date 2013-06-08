@@ -25,17 +25,14 @@ class PagesController < ApplicationController
   def search
     location = params[:location].to_s
     interests_list = params[:interests].to_s
-    start_date = params[:start_date].to_s
-    end_date = params[:end_date].to_s
+    start_date = Date.today.strftime("%m/%d/%Y")
+    end_date = (Date.today + 7).strftime("%m/%d/%Y")
 
     city, region = get_city_region_from_input(location)
     interests = interests_list.split(',').join('%20OR%20').gsub(' ', '')
-   
     date_array = generate_date_array(start_date, end_date)
     forecast_days = get_weather(city, region)
-
     filtered_dates = filter_bad_weather(forecast_days, date_array)
-
     results = eventbrite_api_search(interests, city, region, date_array) rescue nil
     return render :json => {}, :status => 500 if results.blank?
     summary = results.first.last.shift
@@ -45,8 +42,7 @@ class PagesController < ApplicationController
     @stripped_events = strip_event_results(events, filtered_dates).first(5)
 
     return render :json => {}, :status => 500 if @stripped_events.blank?
-
-    render partial: "search_results", :content_type => 'text/html'
+    render partial: "search_results", content_type: 'text/html'
   end
 
   private
@@ -108,7 +104,8 @@ class PagesController < ApplicationController
 
         stripped_events << event_hash
       end
-      stripped_events.reject{|event| good_days.include?(event[:date].to_s)}
+
+      stripped_events
     end
 
     # get_city_region_from_input: split location string and return city, region
@@ -137,7 +134,6 @@ class PagesController < ApplicationController
                          user_key: '134983204943172706728' }
 
       eb_client = EventbriteClient.new(eb_auth_tokens)
-
       date_range =generate_date_string(date_array.first, date_array.last)
       response = eb_client.event_search({ keywords: interests,
                                           city: city,

@@ -3,15 +3,13 @@
 #nav_bar_container{
   height: 40px; float: left; width: 100%;
   /* fallback */
-  background-color: rgba(190, 189, 192, 0.8);
-  /* Safari 4-5, Chrome 1-9 */
-  background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#6d6d6d), to(#494949));
-  /* Safari 5.1, Chrome 10+ */
-  background: -webkit-linear-gradient(top, #6d6d6d, #494949);
-  /* Firefox 3.6+ */
-  background: -moz-linear-gradient(top, #6d6d6d, #494949);
-  /* IE 10 */
-  background: -ms-linear-gradient(top, #6d6d6d, #494949);
-  /* Opera 11.10+ */
-  background: -o-linear-gradient(top, #6d6d6d, #494949);
+  background: #ffffff;
+
+  background-image: -o-linear-gradient(bottom, #FAF9F9 24%, #ffffff 62%);
+  background-image: -moz-linear-gradient(bottom, #FAF9F9 24%, #ffffff 62%);
+  background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0.24, #FAF9F9), color-stop(0.62, #ffffff));
+  background-image: -webkit-linear-gradient(bottom, #FAF9F9 24%, #ffffff 62%);
+  background-image: -ms-linear-gradient(bottom, #FAF9F9 24%, #ffffff 62%);
+  background-image: linear-gradient(bottom, #FAF9F9 24%, #ffffff 62%);
+  
 }
